@@ -1,0 +1,16 @@
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\bin\Debug\net8.0-windows\ProjetoComputacaoGrafica.exe
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\bin\Debug\net8.0-windows\ProjetoComputacaoGrafica.deps.json
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\bin\Debug\net8.0-windows\ProjetoComputacaoGrafica.runtimeconfig.json
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\bin\Debug\net8.0-windows\ProjetoComputacaoGrafica.dll
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\bin\Debug\net8.0-windows\ProjetoComputacaoGrafica.pdb
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\obj\Debug\net8.0-windows\ProjetoComputacaoGrafica.Form1.resources
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\obj\Debug\net8.0-windows\ProjetoComputacaoGrafica.csproj.GenerateResource.cache
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\obj\Debug\net8.0-windows\ProjetoComputacaoGrafica.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\obj\Debug\net8.0-windows\ProjetoComputacaoGrafica.AssemblyInfoInputs.cache
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\obj\Debug\net8.0-windows\ProjetoComputacaoGrafica.AssemblyInfo.cs
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\obj\Debug\net8.0-windows\ProjetoComputacaoGrafica.csproj.CoreCompileInputs.cache
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\obj\Debug\net8.0-windows\ProjetoComputacaoGrafica.dll
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\obj\Debug\net8.0-windows\refint\ProjetoComputacaoGrafica.dll
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\obj\Debug\net8.0-windows\ProjetoComputacaoGrafica.pdb
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\obj\Debug\net8.0-windows\ProjetoComputacaoGrafica.genruntimeconfig.cache
+C:\Users\marcusramos\OneDrive\Documentos\ProjetoComputacaoGrafica\ProjetoComputacaoGrafica\obj\Debug\net8.0-windows\ref\ProjetoComputacaoGrafica.dll
