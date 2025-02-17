@@ -3,7 +3,6 @@
     partial class Form1
     {
         private System.ComponentModel.IContainer components = null;
-
         private System.Windows.Forms.FlowLayoutPanel panelRight;
         private System.Windows.Forms.PictureBox picOriginal;
         private System.Windows.Forms.PictureBox picGrayR;
@@ -12,42 +11,36 @@
         private System.Windows.Forms.PictureBox picGrayH;
         private System.Windows.Forms.PictureBox picGrayS;
         private System.Windows.Forms.PictureBox picGrayI;
-
         private System.Windows.Forms.Label lblInfo;
         private System.Windows.Forms.TrackBar tbBrilho;
         private System.Windows.Forms.TrackBar tbHue;
         private System.Windows.Forms.Button btnCarregar;
         private System.Windows.Forms.Label lblBrilho;
         private System.Windows.Forms.Label lblHue;
-
         private System.Windows.Forms.Label lblTonsRGB;
         private System.Windows.Forms.Label lblTonsHSI;
-
         private System.Windows.Forms.FlowLayoutPanel panelRGB;
         private System.Windows.Forms.FlowLayoutPanel panelHSI;
+        private System.Windows.Forms.Button btnGrayLuminancia;
+        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Label lblMinHue;
+        private System.Windows.Forms.TextBox txtMinHue;
+        private System.Windows.Forms.Label lblMaxHue;
+        private System.Windows.Forms.TextBox txtMaxHue;
+        private System.Windows.Forms.Button btnIntervaloHue;
 
-        /// <summary>
-        /// Limpar os recursos em uso
-        /// </summary>
-        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
                 components.Dispose();
-
             base.Dispose(disposing);
         }
 
         #region Código gerado pelo Windows Forms Designer
 
-        /// <summary>
-        /// Método onde criamos e posicionamos os controles
-        /// e aplicamos melhorias de layout/estilo.
-        /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1950, 1120);
@@ -196,6 +189,63 @@
             this.panelHSI.Controls.Add(this.picGrayS);
             this.panelHSI.Controls.Add(this.picGrayI);
 
+            this.btnGrayLuminancia = new System.Windows.Forms.Button();
+            this.btnGrayLuminancia.AutoSize = true;
+            this.btnGrayLuminancia.Text = "Converter Luminância";
+            this.btnGrayLuminancia.Margin = new System.Windows.Forms.Padding(0, 0, 0, 16);
+            this.btnGrayLuminancia.Padding = new System.Windows.Forms.Padding(8);
+            this.btnGrayLuminancia.BackColor = System.Drawing.Color.FromArgb(28, 151, 234);
+            this.btnGrayLuminancia.ForeColor = System.Drawing.Color.White;
+            this.btnGrayLuminancia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGrayLuminancia.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.btnGrayLuminancia.Click += new System.EventHandler(this.btnGrayLuminancia_Click);
+
+            this.btnReset = new System.Windows.Forms.Button();
+            this.btnReset.AutoSize = true;
+            this.btnReset.Text = "Resetar Imagem";
+            this.btnReset.Margin = new System.Windows.Forms.Padding(0, 0, 0, 16);
+            this.btnReset.Padding = new System.Windows.Forms.Padding(8);
+            this.btnReset.BackColor = System.Drawing.Color.FromArgb(180, 60, 60);
+            this.btnReset.ForeColor = System.Drawing.Color.White;
+            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReset.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+
+            this.lblMinHue = new System.Windows.Forms.Label();
+            this.lblMinHue.AutoSize = true;
+            this.lblMinHue.Text = "Min Hue";
+            this.lblMinHue.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.lblMinHue.ForeColor = System.Drawing.Color.White;
+            this.lblMinHue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular);
+
+            this.txtMinHue = new System.Windows.Forms.TextBox();
+            this.txtMinHue.Margin = new System.Windows.Forms.Padding(0, 0, 0, 16);
+            this.txtMinHue.Text = "0";
+            this.txtMinHue.Font = new System.Drawing.Font("Segoe UI", 12F);
+
+            this.lblMaxHue = new System.Windows.Forms.Label();
+            this.lblMaxHue.AutoSize = true;
+            this.lblMaxHue.Text = "Max Hue";
+            this.lblMaxHue.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.lblMaxHue.ForeColor = System.Drawing.Color.White;
+            this.lblMaxHue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular);
+
+            this.txtMaxHue = new System.Windows.Forms.TextBox();
+            this.txtMaxHue.Margin = new System.Windows.Forms.Padding(0, 0, 0, 16);
+            this.txtMaxHue.Text = "360";
+            this.txtMaxHue.Font = new System.Drawing.Font("Segoe UI", 12F);
+
+            this.btnIntervaloHue = new System.Windows.Forms.Button();
+            this.btnIntervaloHue.AutoSize = true;
+            this.btnIntervaloHue.Text = "Aplicar Intervalo Hue";
+            this.btnIntervaloHue.Margin = new System.Windows.Forms.Padding(0, 0, 0, 16);
+            this.btnIntervaloHue.Padding = new System.Windows.Forms.Padding(8);
+            this.btnIntervaloHue.BackColor = System.Drawing.Color.FromArgb(28, 151, 234);
+            this.btnIntervaloHue.ForeColor = System.Drawing.Color.White;
+            this.btnIntervaloHue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnIntervaloHue.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.btnIntervaloHue.Click += new System.EventHandler(this.btnIntervaloHue_Click);
+
             this.panelRight.Controls.Add(this.btnCarregar);
             this.panelRight.Controls.Add(this.lblInfo);
             this.panelRight.Controls.Add(this.lblBrilho);
@@ -206,6 +256,13 @@
             this.panelRight.Controls.Add(this.panelRGB);
             this.panelRight.Controls.Add(this.lblTonsHSI);
             this.panelRight.Controls.Add(this.panelHSI);
+            this.panelRight.Controls.Add(this.btnGrayLuminancia);
+            this.panelRight.Controls.Add(this.btnReset);
+            this.panelRight.Controls.Add(this.lblMinHue);
+            this.panelRight.Controls.Add(this.txtMinHue);
+            this.panelRight.Controls.Add(this.lblMaxHue);
+            this.panelRight.Controls.Add(this.txtMaxHue);
+            this.panelRight.Controls.Add(this.btnIntervaloHue);
 
             this.Controls.Add(this.picOriginal);
             this.Controls.Add(this.panelRight);

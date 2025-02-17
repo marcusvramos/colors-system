@@ -12,11 +12,8 @@ namespace ProjetoComputacaoGrafica
         public Form1()
         {
             InitializeComponent();
-
             this.Padding = new Padding(50, 0, 0, 0);
-
             this.WindowState = FormWindowState.Maximized;
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -33,49 +30,150 @@ namespace ProjetoComputacaoGrafica
                     originalImage = new Bitmap(ofd.FileName);
                     currentImage = new Bitmap(originalImage);
                     picOriginal.Image = currentImage;
-
                     AtualizarMiniaturas(currentImage);
-
                     tbBrilho.Value = 0;
                     tbHue.Value = 0;
                 }
             }
         }
 
+        private void btnGrayLuminancia_Click(object sender, EventArgs e)
+        {
+            if (currentImage == null) return;
+            Bitmap temp = new Bitmap(currentImage.Width, currentImage.Height);
+            for (int y = 0; y < currentImage.Height; y++)
+            {
+                for (int x = 0; x < currentImage.Width; x++)
+                {
+                    Color c = currentImage.GetPixel(x, y);
+                    int gray = (int)(0.299 * c.R + 0.587 * c.G + 0.114 * c.B);
+                    gray = Math.Max(0, Math.Min(255, gray));
+                    temp.SetPixel(x, y, Color.FromArgb(gray, gray, gray));
+                }
+            }
+            currentImage = temp;
+            picOriginal.Image = currentImage;
+            AtualizarMiniaturas(currentImage);
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            if (originalImage == null) return;
+            currentImage = new Bitmap(originalImage);
+            picOriginal.Image = currentImage;
+            tbBrilho.Value = 0;
+            tbHue.Value = 0;
+            AtualizarMiniaturas(currentImage);
+        }
+
+        private void btnIntervaloHue_Click(object sender, EventArgs e)
+        {
+            if (originalImage == null) return;
+            double minH = 0;
+            double maxH = 360;
+            double.TryParse(txtMinHue.Text, out minH);
+            double.TryParse(txtMaxHue.Text, out maxH);
+            Bitmap temp = new Bitmap(originalImage.Width, originalImage.Height);
+            for (int y = 0; y < originalImage.Height; y++)
+            {
+                for (int x = 0; x < originalImage.Width; x++)
+                {
+                    Color c = originalImage.GetPixel(x, y);
+                    double H, S, I;
+                    RGBToHSI(c.R, c.G, c.B, out H, out S, out I);
+                    if (H >= minH && H <= maxH)
+                    {
+                        temp.SetPixel(x, y, c);
+                    }
+                    else
+                    {
+                        temp.SetPixel(x, y, Color.Black);
+                    }
+                }
+            }
+            currentImage = temp;
+            picOriginal.Image = currentImage;
+            AtualizarMiniaturas(currentImage);
+        }
+
         private void PicOriginal_MouseMove(object sender, MouseEventArgs e)
         {
             if (currentImage == null) return;
-
             Point pt = TranslateZoomMousePosition(picOriginal, e.Location);
             if (pt.X < 0 || pt.X >= currentImage.Width || pt.Y < 0 || pt.Y >= currentImage.Height)
                 return;
-
             Color c = currentImage.GetPixel(pt.X, pt.Y);
-
             int r = c.R;
             int g = c.G;
             int b = c.B;
-
             int cC = 255 - r;
             int cM = 255 - g;
             int cY = 255 - b;
-
             double h, s, i;
             RGBToHSI(r, g, b, out h, out s, out i);
-
-            string info = $"RGB({r}, {g}, {b}) | CMY({cC}, {cM}, {cY}) | " +
-                          $"HSI(H={h:F1}, S={s:F1}, I={i:F1})";
+            string info = $"RGB({r}, {g}, {b}) | CMY({cC}, {cM}, {cY}) | HSI(H={h:F1}, S={s:F1}, I={i:F1})";
             lblInfo.Text = info;
+        }
+
+        private void TbBrilho_Scroll(object sender, EventArgs e)
+        {
+            if (originalImage == null) return;
+            double brilho = tbBrilho.Value;
+            Bitmap temp = new Bitmap(originalImage.Width, originalImage.Height);
+            for (int y = 0; y < originalImage.Height; y++)
+            {
+                for (int x = 0; x < originalImage.Width; x++)
+                {
+                    Color c = originalImage.GetPixel(x, y);
+                    double H, S, I;
+                    RGBToHSI(c.R, c.G, c.B, out H, out S, out I);
+                    I = Math.Max(0, Math.Min(255, I + brilho));
+                    Color newColor = HSIToRGB(H, S, I);
+                    temp.SetPixel(x, y, newColor);
+                }
+            }
+            double hueShift = tbHue.Value;
+            if (Math.Abs(hueShift) > 0.001)
+            {
+                temp = AplicarMudancaHue(temp, hueShift);
+            }
+            currentImage = temp;
+            picOriginal.Image = currentImage;
+            AtualizarMiniaturas(currentImage);
+        }
+
+        private void TbHue_Scroll(object sender, EventArgs e)
+        {
+            if (originalImage == null) return;
+            double hueShift = tbHue.Value;
+            int brilho = tbBrilho.Value;
+            Bitmap temp = new Bitmap(originalImage.Width, originalImage.Height);
+            for (int y = 0; y < originalImage.Height; y++)
+            {
+                for (int x = 0; x < originalImage.Width; x++)
+                {
+                    Color c = originalImage.GetPixel(x, y);
+                    int r = c.R + brilho;
+                    int g = c.G + brilho;
+                    int b = c.B + brilho;
+                    r = Math.Max(0, Math.Min(255, r));
+                    g = Math.Max(0, Math.Min(255, g));
+                    b = Math.Max(0, Math.Min(255, b));
+                    temp.SetPixel(x, y, Color.FromArgb(r, g, b));
+                }
+            }
+            temp = AplicarMudancaHue(temp, hueShift);
+            currentImage = temp;
+            picOriginal.Image = currentImage;
+            AtualizarMiniaturas(currentImage);
         }
 
         private Point TranslateZoomMousePosition(PictureBox pic, Point mouse)
         {
             if (pic.Image == null) return new Point(-1, -1);
-
             float imageAspect = (float)pic.Image.Width / pic.Image.Height;
             float boxAspect = (float)pic.Width / pic.Height;
             int imgWidth, imgHeight, offsetX, offsetY;
-
             if (imageAspect > boxAspect)
             {
                 imgWidth = pic.Width;
@@ -90,13 +188,10 @@ namespace ProjetoComputacaoGrafica
                 offsetX = (pic.Width - imgWidth) / 2;
                 offsetY = 0;
             }
-
             int mx = mouse.X - offsetX;
             int my = mouse.Y - offsetY;
-
             if (mx < 0 || my < 0 || mx >= imgWidth || my >= imgHeight)
                 return new Point(-1, -1);
-
             float rx = mx / (float)imgWidth;
             float ry = my / (float)imgHeight;
             int px = (int)(rx * pic.Image.Width);
@@ -109,10 +204,8 @@ namespace ProjetoComputacaoGrafica
             double r = R / 255.0;
             double g = G / 255.0;
             double b = B / 255.0;
-
             double num = 0.5 * ((r - g) + (r - b));
             double den = Math.Sqrt((r - g) * (r - g) + (r - b) * (g - b));
-
             double theta = 0;
             if (den != 0)
             {
@@ -121,9 +214,7 @@ namespace ProjetoComputacaoGrafica
                 if (acosValue < -1.0) acosValue = -1.0;
                 theta = Math.Acos(acosValue);
             }
-            if (b > g)
-                theta = 2.0 * Math.PI - theta;
-
+            if (b > g) theta = 2.0 * Math.PI - theta;
             H = theta * 180.0 / Math.PI;
             double minVal = Math.Min(r, Math.Min(g, b));
             double sum = r + g + b;
@@ -138,7 +229,6 @@ namespace ProjetoComputacaoGrafica
             double h = H * Math.PI / 180.0;
             double s = S / 100.0;
             double i = I / 255.0;
-
             double r = 0, g = 0, b = 0;
             if (h < 0) h += 2.0 * Math.PI;
             double z = 1.0 - Math.Abs((h / (Math.PI / 3.0)) % 2.0 - 1.0);
@@ -146,7 +236,6 @@ namespace ProjetoComputacaoGrafica
             double x = c * z;
             double hDeg = H;
             double m = i * (1 - s);
-
             if (hDeg >= 0 && hDeg < 120)
             {
                 r = c + m;
@@ -165,25 +254,21 @@ namespace ProjetoComputacaoGrafica
                 g = m;
                 b = c + m;
             }
-
             int R = (int)Math.Round(r * 255.0);
             int G = (int)Math.Round(g * 255.0);
             int B = (int)Math.Round(b * 255.0);
             R = Math.Max(0, Math.Min(255, R));
             G = Math.Max(0, Math.Min(255, G));
             B = Math.Max(0, Math.Min(255, B));
-
             return Color.FromArgb(R, G, B);
         }
 
         private void AtualizarMiniaturas(Bitmap source)
         {
             if (source == null) return;
-
             picGrayR.Image = CriarGrayChannelRGB(source, 'R');
             picGrayG.Image = CriarGrayChannelRGB(source, 'G');
             picGrayB.Image = CriarGrayChannelRGB(source, 'B');
-
             picGrayH.Image = CriarGrayChannelHSI(source, 'H');
             picGrayS.Image = CriarGrayChannelHSI(source, 'S');
             picGrayI.Image = CriarGrayChannelHSI(source, 'I');
@@ -233,68 +318,6 @@ namespace ProjetoComputacaoGrafica
                 }
             }
             return gray;
-        }
-
-        private void TbBrilho_Scroll(object sender, EventArgs e)
-        {
-            if (originalImage == null) return;
-
-            double brilho = tbBrilho.Value;
-            Bitmap temp = new Bitmap(originalImage.Width, originalImage.Height);
-
-            for (int y = 0; y < originalImage.Height; y++)
-            {
-                for (int x = 0; x < originalImage.Width; x++)
-                {
-                    Color c = originalImage.GetPixel(x, y);
-
-                    double H, S, I;
-                    RGBToHSI(c.R, c.G, c.B, out H, out S, out I);
-
-                    I = Math.Max(0, Math.Min(255, I + brilho));
-
-                    Color newColor = HSIToRGB(H, S, I);
-                    temp.SetPixel(x, y, newColor);
-                }
-            }
-
-            // Se houver mudança de matiz, aplicamos a transformação
-            double hueShift = tbHue.Value;
-            if (Math.Abs(hueShift) > 0.001)
-            {
-                temp = AplicarMudancaHue(temp, hueShift);
-            }
-
-            currentImage = temp;
-            picOriginal.Image = currentImage;
-            AtualizarMiniaturas(currentImage);
-        }
-
-        private void TbHue_Scroll(object sender, EventArgs e)
-        {
-            if (originalImage == null) return;
-
-            double hueShift = tbHue.Value;
-            int brilho = tbBrilho.Value;
-            Bitmap temp = new Bitmap(originalImage.Width, originalImage.Height);
-            for (int y = 0; y < originalImage.Height; y++)
-            {
-                for (int x = 0; x < originalImage.Width; x++)
-                {
-                    Color c = originalImage.GetPixel(x, y);
-                    int r = c.R + brilho;
-                    int g = c.G + brilho;
-                    int b = c.B + brilho;
-                    r = Math.Max(0, Math.Min(255, r));
-                    g = Math.Max(0, Math.Min(255, g));
-                    b = Math.Max(0, Math.Min(255, b));
-                    temp.SetPixel(x, y, Color.FromArgb(r, g, b));
-                }
-            }
-            temp = AplicarMudancaHue(temp, hueShift);
-            currentImage = temp;
-            picOriginal.Image = currentImage;
-            AtualizarMiniaturas(currentImage);
         }
 
         private Bitmap AplicarMudancaHue(Bitmap src, double hueShift)
